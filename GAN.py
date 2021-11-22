@@ -172,16 +172,14 @@ def generate_and_save_images(model, epoch, test_input, save_URL):
 
 
 
-pokemon_class_1 = ['Pidgeot', 'Lapras', 'Tangela', 'Electrode', 'Dewgong', 'Rhyhorn', 
-                'Goldeen', 'Exeggcute', 'Electabuzz', 'Psyduck', 'Victreebel',
-                'Abra', 'Gloom', 'Tauros', 'Alolan Sandslash', 'Persian', 
+pokemon_class_1 = ['Alolan Sandslash', 'Persian', 
                 'Golduck', 'Ivysaur', 'Voltorb', 'Clefairy', 'Seadra', 
                 'Mew', 'Zubat', 'Omastar', 'Hitmonlee', 'Paras',
                 'Caterpie', 'Bulbasaur', 'Pinsir', 'Gyarados', 'Spearow', 
                 'Drowzee']
 
 for pokemon in pokemon_class_1:
-    train_dataset = create_dataset("../PokemonData/" + str(pokemon) + "/*")
+    train_dataset = create_dataset("./PokemonData/" + str(pokemon) + "/*")
     save = str("./savedData/" + str(pokemon) + "/")
     
     train(train_dataset, epochs=2000, save_after=100, save_URL = save)
