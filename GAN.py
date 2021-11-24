@@ -133,8 +133,6 @@ def train(dataset, epochs, save_after, save_URL):
     generate_and_save_images(generator, 0, seed, save_URL)
     
     for epoch in range(epochs):
-        start = time.time()
-
         for image_batch in dataset:
             train_step(image_batch)
 
@@ -142,7 +140,7 @@ def train(dataset, epochs, save_after, save_URL):
             display.clear_output(wait=True)
             generate_and_save_images(generator, epoch + 1, seed, save_URL)
 
-        print ('Time for epoch {} is {} sec'.format(epoch + 1, time.time()-start))
+        
 
     display.clear_output(wait=True)
     generate_and_save_images(generator, epochs, seed, save_URL)
@@ -163,7 +161,7 @@ def generate_and_save_images(model, epoch, test_input, save_URL):
         plt.axis('off')
     plt.suptitle(f'Epoch {epoch}')
     plt.savefig('image_at_epoch_{:04d}.png'.format(epoch))
-    plt.show()
+    
 
     if (epoch % 100 == 0):
         for i in range(predictions.shape[0]):
@@ -171,16 +169,22 @@ def generate_and_save_images(model, epoch, test_input, save_URL):
             imageio.imwrite(str(save_URL + str(i) + ".jpeg"), imagearray)
 
 
+pokemon_class_1 =[ 'Vulpix', 'Dugtrio']
 
-pokemon_class_1 = ['Alolan Sandslash', 'Persian', 
-                'Golduck', 'Ivysaur', 'Voltorb', 'Clefairy', 'Seadra', 
-                'Mew', 'Zubat', 'Omastar', 'Hitmonlee', 'Paras',
-                'Caterpie', 'Bulbasaur', 'Pinsir', 'Gyarados', 'Spearow', 
-                'Drowzee']
 
+# 'Porygon'
 for pokemon in pokemon_class_1:
+    f = open("log.txt", "w")
+    f.write('start pokemon {}'.format(pokemon))
+    start = time.time()
+    f.close()
     train_dataset = create_dataset("./PokemonData/" + str(pokemon) + "/*")
     save = str("./savedData/" + str(pokemon) + "/")
     
-    train(train_dataset, epochs=2000, save_after=100, save_URL = save)
+    train(train_dataset, epochs=4000, save_after=100, save_URL = save)
+    f = open("log.txt", "w")
+    f.write('Time for pokemon {} is {} sec'.format(pokemon, time.time()-start))
+    f.close()
+
+
 
